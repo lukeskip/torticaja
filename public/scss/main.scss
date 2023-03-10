@@ -1,0 +1,44 @@
+
+@import './variables';
+*{
+    box-sizing: border-box;
+}
+body,html{
+    margin: 0;
+    padding: 0;
+}
+
+.hidden{
+    display:none;
+}
+
+form{
+    padding: 20px;
+    input,select,textarea{
+        width: 100%;
+    }
+    input,select{
+        height: 40px;
+    }
+}
+
+.slides{
+    height: 100vh;
+    .owl-stage-outer,.owl-stage,.owl-item,.owl-item >div{
+        height: 100vh; 
+    }
+    >.owl-item{
+        display: flex;
+        align-items: center;
+    }
+}
+
+.button{
+    background: $main-color;
+    color: white;
+    border-radius: 10px;
+    padding: 5px 10px;
+    text-decoration: none;
+    margin-top: 20px;
+    display: inline-block;
+}
