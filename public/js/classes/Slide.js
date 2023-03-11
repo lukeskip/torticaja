@@ -35,8 +35,8 @@ class Slide{
                         <div>
                             <input 
                                 name="${child.attr('name')}" 
-                                id="${child.attr('id')}"
-                                class="${child.attr('class')}"
+                                id="${child.attr('name')}"
+                                class="${child.attr('name')}"
                             />
                             <a href="#" class="next button">
                                 Siguiente
@@ -44,16 +44,7 @@ class Slide{
                         </div>
                     `)
                 }else if(child[0].tagName == 'SELECT'){
-                    $('.slides').append(`
-                        <div>
-                            <select>
-                                <option></option>
-                            </select>
-                            <a class="next button" href="#" >
-                                Siguiente
-                            </a> 
-                        </div>
-                    `) 
+                    
                 }
                
             });

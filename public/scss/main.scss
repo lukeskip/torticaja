@@ -6,6 +6,7 @@
 body,html{
     margin: 0;
     padding: 0;
+    font-family: $main-font;
 }
 
 .hidden{
@@ -24,12 +25,15 @@ form{
 
 .slides{
     height: 100vh;
-    .owl-stage-outer,.owl-stage,.owl-item,.owl-item >div{
+    .owl-stage-outer,.owl-stage,.owl-item{
         height: 100vh; 
     }
-    >.owl-item{
+    .owl-item{
         display: flex;
         align-items: center;
+        >div{
+            width: 100%;
+        }
     }
 }
 
@@ -41,4 +45,9 @@ form{
     text-decoration: none;
     margin-top: 20px;
     display: inline-block;
+    font-weight: 600;
+    text-transform: uppercase;
+    text-align: center;
+    min-width: 300px;
+    font-size: 2em;
 }
