@@ -14,21 +14,24 @@ body,html{
 }
 
 form{
-    padding: 20px;
     input,select,textarea{
         width: 100%;
     }
     input,select{
         height: 40px;
     }
+
+    input{
+        font-size: 1.5em;
+    }
 }
 
 .slides{
-    height: 100vh;
     .owl-stage-outer,.owl-stage,.owl-item{
-        height: 100vh; 
+        height: 100vh;      
     }
     .owl-item{
+        padding:40px;
         display: flex;
         align-items: center;
         >div{
@@ -48,6 +51,6 @@ form{
     font-weight: 600;
     text-transform: uppercase;
     text-align: center;
-    min-width: 300px;
+    width: 100%;
     font-size: 2em;
 }

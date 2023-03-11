@@ -2,11 +2,17 @@
 @section('content')
 <div class="slides-wrapper">
     <form action="" >
-        <input type="text" name="nombre" placeholder="Nombre">
-        <input type="text" name="apellido" placeholder="apellido">
-        <select name="" id="">
-            <option value=""></option>
-        </select>
+        <div>
+            <label for="">Nombre</label>
+            <input type="text" name="first_name" placeholder="Nombre">
+        </div>
+
+        <div>
+            <label for="">Apellido</label>
+            <input type="text" name="last_name" placeholder="Nombre">
+        </div>
+
+       
     </form>
 </div>
 

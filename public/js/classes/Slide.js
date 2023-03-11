@@ -26,26 +26,14 @@ class Slide{
             
             let content = this.container.find('form');
             
-            content.children('input,select').each(function () {
+            content.children('div').each(function () {
                 let child = $(this);
-                
-                if(child[0].nodeName == 'INPUT'){
-                    
-                    $('.slides').append(`
-                        <div>
-                            <input 
-                                name="${child.attr('name')}" 
-                                id="${child.attr('name')}"
-                                class="${child.attr('name')}"
-                            />
-                            <a href="#" class="next button">
-                                Siguiente
-                            </a> 
-                        </div>
-                    `)
-                }else if(child[0].tagName == 'SELECT'){
-                    
-                }
+                console.log(child.html());
+                $('.slides').append(`
+                <div>
+                    <div>${child.html()}</div>
+                    <a href="#" class="button next">Siguiente</a>
+                </div>`);
                
             });
             
@@ -55,6 +43,8 @@ class Slide{
             this.carousel.addClass('owl-carousel');
             this.carousel.owlCarousel({
                 items:1,
+                nav:false,
+                dots:false
             });
 
             
