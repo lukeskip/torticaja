@@ -12,16 +12,24 @@ class Slide{
         // Next button
         $("body").on( "click", ".next", function(e) {
             e.preventDefault();
-            self.carousel.trigger('next.owl.carousel');
+            self.next();
         });
 
-        // We focus the input
+        // WE FOCUS THE INPUT ON EVERY SLIDE
         self.carousel.on('translated.owl.carousel', function(event) {
-            let current = event.item.index;
-            let input = self.carousel.find(".owl-item.active").find('input');
+            let current     = event.item.index + 1;
+            let total       = event.relatedTarget.items().length 
+            let input       = self.carousel.find(".owl-item.active").find('input');
             input.focus();
+
+            // THIS IS THE LAST ITEM
+            if(current == total){
+                let fields = $('form').serialize();
+                connection ('POST',fields,'/test-connection',false);
+             }
             
-        })
+        });
+
         
 
     }
@@ -31,11 +39,12 @@ class Slide{
         const self = this;
         if(this.type == 'form'){
             
-            
+            // WE ADD THE TARGET OF THE SLIDES
             this.container.append('<div class="slides"></div>');
             
             let content = this.container.find('form');
             
+            // WE CONVERT EVERY INPUT WRAPPED ON A DIV INTO A SLIDE
             content.children('div').each(function () {
                 let child = $(this);
 
@@ -47,19 +56,23 @@ class Slide{
                
             });
 
-            $('.slides').append(`
-                <lottie-player src="https://assets7.lottiefiles.com/packages/lf20_lk80fpsm.json"  background="transparent"  speed="1"  style="width: 300px; height: 300px;"  loop  autoplay></lottie-player>
-            `);
-            
+            // WE ADDED A EMPTY SLIDE AT THE END
+            $('.slides').append('<div></div>');
+
+            // WE REMOVE THE ORIGINAL CONTENT
             content.remove();
+
+            // WE WRAP THE SLIDES ON A FORM TAG
             $('.slides').wrapAll("<form></form>");
+
+
+            // WE INITIATE OWL CAROUSEL
             this.carousel = this.container.find('.slides');
             this.carousel.addClass('owl-carousel');
             this.carousel.owlCarousel({
                 items:1,
                 nav:false,
                 dots:false,
-                loop:true
             });
 
             
@@ -70,6 +83,6 @@ class Slide{
     }
 
     next(){
-        owl.trigger('next.owl.carousel');
+        this.carousel.trigger('next.owl.carousel');
     }
 }

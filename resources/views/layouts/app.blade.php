@@ -13,16 +13,24 @@
     @yield('styles')
 </head>
 <body>
+    <div class="loader-wrapper">
+        <div class="animation-wrapper">
+            <lottie-player src="{{asset('animations/loading.json')}}"  background="transparent"  speed="1" loop  style="width: 300px; height: 300px;"  autoplay></lottie-player>
+        </div>
+    </div>
     @yield('content')
 
-
+    <!-- STARTS: PRELOAD IMAGES-->
+    <lottie-player class="hidden" src="{{asset('animations/success.json')}}"  background="transparent"  speed="1"  style="width: 300px; height: 300px;"  autoplay></lottie-player>
+    <!-- ENDS: PRELOAD IMAGES-->
     <script type="text/javascript">
-			let APP_URL = {!! json_encode(url('/')) !!};
+			const APP_URL = {!! json_encode(url('/')) !!};
     </script>
     
     <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
     <script  src="{{asset('plugins/owlcarousel/dist/owl.carousel.min.js')}}"></script>
     <script  src="{{asset('js/classes/Slide.js')}}"></script>
+    <script  src="{{asset('js/classes/Message.js')}}"></script>
     <script src="{{asset('js/main.js')}}"></script>
     <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
 

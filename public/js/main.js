@@ -1,16 +1,12 @@
-let slides = new Slide('form');
+let slides 	= new Slide('form');
 
-// Form submission
-$('form').on('submit',function(e){
-	e.preventDefault();
-
-})
 
 // Pool de conexiones
 function connection (method,fields,link,handle = false){
 
 	return $.ajax({
-		header:{
+		headers:{
+			'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
 			'Content-Type':'application/x-www-form-urlencoded',
 			'Accept':'application/json'
 		},
@@ -19,26 +15,26 @@ function connection (method,fields,link,handle = false){
 	 	dataType:'json',
 	  	data:fields,
 	  	beforeSend: function( xhr ) {
-    		$('.loader-wrapper').css('display','block');
+    		show_loader()
   		}
 	})
 	.done(function(data) {
-		// Si handle es true, solo regresamos la respuesta del ajax, si no manejamos el mensaje al usuario desde aquí
-		$('.loader-wrapper').fadeOut();
+		// IF HANDLE IS TRUE WE RETURN THE AJAX DATA, IF IT'S FALSE WE SHOW THE MESSAGE FROM HERE
+		hide_loader()
 		if(handle){
 			return data;
 		}else{
 			if(data.success == true){
-				show_message('success','¡Listo!',data.message);
+				let message = new Message('success','hola como estas?',true);
 			}else{
-				show_message('error','¡Error!',data.message);
+				let message = new Message('error','hola como estas?',false);
 			}
 		}	
 	  
 	}).fail(function(jqXHR, exception){
-		$('.loader-wrapper').fadeOut();
+		hide_loader();
 		msg =  get_error(jqXHR.status);
-		show_message('error','Error en el servidor!',msg);
+		let message = new Message('error',msg,false);
 	});
 
 }
@@ -55,18 +51,10 @@ function get_error(code){
 	} 
 }
 
-// controlador de mensajes
-function show_message(type,title,message,link,color = '#CF2832'){
-	swal({ 
-		title: title,
-		text: message,
-		type: type,
-		confirmButtonText: 'OK',
-		confirmButtonColor: color 
-	},
-	function(){
-		if(link){
-			window.location.replace(link);	
-		}
-	});
+function show_loader(){
+	$('.loader-wrapper').css('display','flex');
+}
+
+function hide_loader(){
+	$('.loader-wrapper').css('display','none');
 }

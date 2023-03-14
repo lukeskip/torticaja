@@ -20,3 +20,7 @@ Route::get('/', function () {
 Route::get('/slideform', function () {
     return view('test');
 });
+
+Route::post('/test-connection', function () {
+    return response()->json(['success' => true ]);
+});
