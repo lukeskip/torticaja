@@ -9,7 +9,7 @@
 
         <div>
             <label for="">Apellido</label>
-            <input type="text" name="last_name" placeholder="Nombre">
+            <input type="text" name="last_name" placeholder="Apellido">
         </div>
 
        

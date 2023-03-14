@@ -16,6 +16,15 @@ body,html{
 form{
     input,select,textarea{
         width: 100%;
+        border:0;
+        background-color: transparent;
+        // &::placeholder{
+            
+
+        // }
+        &:focus{
+            outline: none;
+        }
     }
     input,select{
         height: 40px;

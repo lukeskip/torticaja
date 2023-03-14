@@ -9,14 +9,24 @@ class Slide{
         
         this.populate();
 
+        // Next button
         $("body").on( "click", ".next", function(e) {
             e.preventDefault();
             self.carousel.trigger('next.owl.carousel');
         });
+
+        // We focus the input
+        self.carousel.on('translated.owl.carousel', function(event) {
+            let current = event.item.index;
+            let input = self.carousel.find(".owl-item.active").find('input');
+            input.focus();
+            
+        })
         
 
     }
 
+    // Pupulate the slide with the form content
     populate(){
         const self = this;
         if(this.type == 'form'){
@@ -31,12 +41,15 @@ class Slide{
                 console.log(child.html());
                 $('.slides').append(`
                 <div>
-                    <lottie-player src="https://assets7.lottiefiles.com/packages/lf20_lk80fpsm.json"  background="transparent"  speed="1"  style="width: 300px; height: 300px;"  loop  autoplay></lottie-player>
                     <div>${child.html()}</div>
                     <a href="#" class="button next">Siguiente</a>
                 </div>`);
                
             });
+
+            $('.slides').append(`
+                <lottie-player src="https://assets7.lottiefiles.com/packages/lf20_lk80fpsm.json"  background="transparent"  speed="1"  style="width: 300px; height: 300px;"  loop  autoplay></lottie-player>
+            `);
             
             content.remove();
             $('.slides').wrapAll("<form></form>");
@@ -45,7 +58,8 @@ class Slide{
             this.carousel.owlCarousel({
                 items:1,
                 nav:false,
-                dots:false
+                dots:false,
+                loop:true
             });
 
             
