@@ -38,7 +38,7 @@ class Slide{
             
             content.children('div').each(function () {
                 let child = $(this);
-                console.log(child.html());
+
                 $('.slides').append(`
                 <div>
                     <div>${child.html()}</div>
