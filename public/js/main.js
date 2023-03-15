@@ -1,5 +1,15 @@
-let slides 	= new Slide('form');
-let booleans = new BooleanButton('.boolean');
+$(document).ready(function($){
+
+	let slides 	= new Slide('form');
+	let booleans = new BooleanButton('.boolean');
+
+    $('.btn-menu').on('click', function() {
+        $('body').toggleClass('menu-open');
+        $('.menu').toggleClass('active');
+    });
+
+	
+});
 
 // Pool de conexiones
 function connection (method,fields,link,handle = false){

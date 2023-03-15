@@ -7,10 +7,6 @@
     justify-content:center;
     margin-bottom: 10px;
 
-    &:first-child{
-        margin-top: 20px;
-    }
-
     >div:first-child{
         min-width: 100px;
         flex-basis: 50%;

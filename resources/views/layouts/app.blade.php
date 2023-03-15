@@ -18,7 +18,25 @@
             <lottie-player src="{{asset('animations/loading.json')}}"  background="transparent"  speed="1" loop  style="width: 300px; height: 300px;"  autoplay></lottie-player>
         </div>
     </div>
-    @yield('content')
+
+    <nav>
+        <a class="logo" href="#">Inicio</a>
+        <div class="menu-main-container">
+            <ul id="menu-main" class="menu">
+                
+                <li><a href="#">Hola</a></li>
+            </ul>
+        </div>          
+        <div class="hamburguer">
+            <button class="btn-menu" type="button">
+                <i class="btn-menu__bars" aria-hidden="true"></i>
+                <span class="visually-hidden">Menu</span>
+            </button>
+        </div>
+    </nav>
+    <div class="container">
+        @yield('content')
+    </div>
 
     <!-- STARTS: PRELOAD IMAGES-->
     <lottie-player class="hidden" src="{{asset('animations/success.json')}}"  background="transparent"  speed="1"  style="width: 300px; height: 300px;"  autoplay></lottie-player>
