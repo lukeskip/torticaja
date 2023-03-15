@@ -1,0 +1,51 @@
+@import './variables.scss';
+.boolean-button{
+    display: flex;
+    flex-wrap: wrap;
+    flex-grow:1; 
+    align-items: center;
+    justify-content:center;
+    margin-bottom: 10px;
+
+    &:first-child{
+        margin-top: 20px;
+    }
+
+    >div:first-child{
+        min-width: 100px;
+        flex-basis: 50%;
+    }
+    .slide-button{ 
+        width:100px;
+        height: 40px;
+        border-radius: 20px;
+        background-color: $negative-color;
+        position: relative;
+        box-shadow: 10px 12px 6px -7px rgba(0,0,0,0.4) inset;
+        -webkit-box-shadow: 10px 12px 6px -7px rgba(0,0,0,0.4) inset;
+        -moz-box-shadow: 10px 12px 6px -7px rgba(0,0,0,0.4) inset;
+        &::before{
+            content:'';
+            height:40px;
+            width: 40px;
+            border-radius: 100%;
+            background-color:black;
+            position: absolute;
+            top:0;
+            left:0;
+            transition: all 100ms ease-out;
+            box-shadow: 10px 12px 17px -10px rgba(0,0,0,0.4);
+            -webkit-box-shadow: 10px 12px 17px -10px rgba(0,0,0,0.4);
+            -moz-box-shadow: 10px 12px 17px -10px rgba(0,0,0,0.4);
+            
+        }
+        &.active{
+            background-color: $positive-color;
+            &::before{
+                left: 100%;
+                margin-left: -40px;
+            
+            }
+        }
+    }
+}

@@ -1,5 +1,5 @@
 let slides 	= new Slide('form');
-
+let booleans = new BooleanButton('.boolean');
 
 // Pool de conexiones
 function connection (method,fields,link,handle = false){

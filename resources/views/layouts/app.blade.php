@@ -31,6 +31,7 @@
     <script  src="{{asset('plugins/owlcarousel/dist/owl.carousel.min.js')}}"></script>
     <script  src="{{asset('js/classes/Slide.js')}}"></script>
     <script  src="{{asset('js/classes/Message.js')}}"></script>
+    <script  src="{{asset('js/classes/BooleanButton.js')}}"></script>
     <script src="{{asset('js/main.js')}}"></script>
     <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
 

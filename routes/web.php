@@ -21,6 +21,10 @@ Route::get('/slideform', function () {
     return view('test');
 });
 
+Route::get('/config', function () {
+    return view('config');
+});
+
 Route::post('/test-connection', function () {
     return response()->json(['success' => true ]);
 });
