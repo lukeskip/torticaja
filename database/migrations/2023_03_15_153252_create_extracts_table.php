@@ -15,6 +15,13 @@ class CreateExtractsTable extends Migration
     {
         Schema::create('extracts', function (Blueprint $table) {
             $table->id();
+            $table->decimal('dough',9,2);
+            $table->decimal('dough_cold',9,2);
+            $table->decimal('dough_leftover',9,2);
+            $table->decimal('flour',9,2);
+            $table->decimal('flour_kg',9,2);
+            $table->decimal('tortilla_leftover',9,2);
+            $table->date('date');
             $table->timestamps();
         });
     }
