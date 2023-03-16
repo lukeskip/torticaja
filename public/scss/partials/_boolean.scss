@@ -1,4 +1,4 @@
-@import './variables.scss';
+@use './variables';
 .boolean-button{
     display: flex;
     flex-wrap: wrap;
@@ -15,7 +15,7 @@
         width:100px;
         height: 40px;
         border-radius: 20px;
-        background-color: $negative-color;
+        background-color: variables.$negative-color;
         position: relative;
         box-shadow: 10px 12px 6px -7px rgba(0,0,0,0.4) inset;
         -webkit-box-shadow: 10px 12px 6px -7px rgba(0,0,0,0.4) inset;
@@ -36,7 +36,7 @@
             
         }
         &.active{
-            background-color: $positive-color;
+            background-color: variables.$positive-color;
             &::before{
                 left: 100%;
                 margin-left: -40px;

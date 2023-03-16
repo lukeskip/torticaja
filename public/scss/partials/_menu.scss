@@ -1,6 +1,6 @@
-@import './variables.scss';
+@use './variables';
 nav{
-    background-color: $main-color-dark;
+    background-color: variables.$main-color-dark;
     height: 70px;
     font-family: 'Salted Web';
     margin: 0;
@@ -86,7 +86,7 @@ nav{
         position: relative;
         width: 30px;
         height: 4px;
-        background-color: $main-color;
+        background-color: variables.$main-color;
         transition: .3s;
 
         &:before, &:after {
@@ -96,7 +96,7 @@ nav{
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: $main-color;
+            background-color: variables.$main-color;
             transition: .3s;
         }
 

@@ -1,0 +1,27 @@
+@use './variables';
+.config-sheet{
+
+    .form-group{ 
+        display: flex;
+        flex-wrap: wrap;
+        flex-grow:1; 
+        align-items: center;
+        justify-content:center;
+        margin-bottom: 10px;
+        >:first-child{
+            min-width: 100px;
+            flex-basis: 50%;
+        }
+        input{
+            width: 100px;
+            border-radius: 20px;
+            background: variables.$neutral-color;
+            text-align: center;
+            font-size: 1em;
+            box-shadow: 10px 12px 6px -7px rgba(0,0,0,0.4) inset;
+            -webkit-box-shadow: 10px 12px 6px -7px rgba(0,0,0,0.4) inset;
+            -moz-box-shadow: 10px 12px 6px -7px rgba(0,0,0,0.4) inset;
+        }
+        
+    }
+}

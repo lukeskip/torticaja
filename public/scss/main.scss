@@ -1,15 +1,17 @@
 
-@import './variables.scss';
-@import './message.scss';
-@import './boolean.scss';
-@import './menu.scss';
+@use 'partials/variables';
+@use 'partials/message';
+@use 'partials/boolean';
+@use 'partials/menu';
+@use 'partials/form';
+
 *{
     box-sizing: border-box;
 }
 body,html{
     margin: 0;
     padding: 0;
-    font-family: $main-font;
+    font-family: variables.$main-font;
     font-size: 24px;
 }
 .container {
@@ -77,7 +79,7 @@ form{
 }
 
 .button{
-    background: $main-color;
+    background: variables.$main-color;
     color: white;
     border-radius: 10px;
     padding: 5px 10px;
