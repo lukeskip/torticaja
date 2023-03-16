@@ -1,0 +1,125 @@
+@import "./variables.scss";
+
+
+
+section{
+    margin-bottom:20px;
+}
+
+
+
+.order-checkout{
+    &.modal-style{
+        width:100%;
+        height: 100vh;
+        background: #EEEEEE;
+        padding:10px;
+        @include transition(top);
+        position: fixed;
+        top:-150vh;
+        z-index: 1031;
+        left: 0;
+        bottom: 0;
+        overflow-y: scroll;
+        &.active{
+            top:0;
+        }
+    }
+   
+    
+    .controls{
+        width:100%;
+        padding: 10px;
+        .resume{
+            margin-bottom: 10px;
+        }
+        .date{
+            margin-top: 10px;
+        }
+        
+        .buttons{
+            display: flex;
+            button{
+                margin-top: 0;
+                &:last-child{
+                    margin-left: 5px;
+                }
+            }
+        }
+    }
+}
+
+.checkout-button-container{
+    position: fixed;
+    width: 100%;
+    background-color: white;
+    
+    .checkout-button{
+        border-radius: 100%;
+        background-color: $color-success;
+        width: 2.2em;
+        height: 2.2em;
+        text-align: center;
+        line-height: 2.2em;
+        font-size: 2em;
+        color: white;
+        
+        
+    
+    }
+}
+
+.product-add-animate{
+    width: 100px;
+    height: 100px;
+    position: fixed;
+    top: -10%;
+    left: 50%;
+    margin-top: -50px;
+    margin-left: -50px;
+    z-index: 9999;
+    background-color: $color-success;
+    line-height: 100px;
+    text-align: center;
+    color:white;
+    font-size: 4em;
+    border-radius: 100%;
+    @include transition(top);
+    opacity: 0;
+    &.active{
+        opacity: 1;
+        top: 100%;
+        margin-top: -50px;
+    }
+}
+
+
+.search-box.fixed{
+    width:100%;
+    height: 60px;
+    background: white;
+    position: fixed;
+    top:76px;
+    left:0;
+    z-index: 1029;
+    border-bottom:solid 1px #EEEEEE;
+    >div{
+        max-width: 910px;
+        margin: auto;
+        padding: 10px 20px;
+    }
+}
+
+.order{
+    .clients{
+        margin: 20px auto; 
+    }
+}
+
+@media (max-width: 767px) {
+   
+    .order-checkout.modal-style .controls .resume{
+        display:block
+    }
+       
+}

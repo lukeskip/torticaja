@@ -1,0 +1,84 @@
+@import "./variables.scss";
+
+.swtch{
+    width:100%;
+    height: 50px;
+    margin: 10px auto;
+    position: relative;
+    &:before{
+        content: '';
+        width: 100%;
+        background: white;
+        height: 30px;
+        border-radius: 20px;
+        display: block;
+        position: absolute;
+        top: 50%;
+        left: 0;
+        margin-top: -15px;
+        z-index: 1;
+        @include inner-shadow();
+    }
+    .labels-container{
+        display: flex;
+        position: relative;
+        z-index: 2;
+        margin-top: 7px;
+        >div.label{
+            flex:1;
+            text-align: center;
+            color:rgb(150, 150, 150);
+            display: block;
+            display: flex;
+            &.active{
+                color:black
+            }
+            span{
+                font-size: 1.5em;
+                border-radius: 5px;
+                height: 40px;
+                width:40px;
+                text-align: center;
+                justify-content: center;
+                margin: auto;
+                line-height: 40px;
+                padding-top: 5px;
+            }
+        }
+    }
+    .pointer{
+        width: 60px;
+        height: 20px;
+        padding: 10px;
+        background-color:$color_enough;
+        border-radius: 10px;
+        position: absolute;
+        top: 50%;
+        left:-100px;
+        margin-top: -7px;
+        z-index: 1;
+        @include transition(left,0.3s);
+        @include inner-shadow();
+        @include shadow();
+        &.rounded{
+            width: 50px;
+            height: 50px;
+            border-radius: 100%!important;
+            margin-top: -25px;
+        }
+        &:before{
+            content: '';
+            display: block;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            margin-left: -20px;
+            margin-top: -20px;
+            width: 40px;
+            height: 40px;
+            border-radius: 100%;
+            border: #b0b0b0 solid 2px;
+            background-color: white;
+        }
+    }
+}
