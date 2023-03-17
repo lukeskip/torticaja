@@ -19,6 +19,12 @@ class CreateProductsTable extends Migration
             $table->decimal('unit_price',9,2);
             $table->string('unit');
             $table->string('image')->nullable();
+            $table->foreignId('branch_id') // UNSIGNED BIG INT
+                    ->constrained()
+                    ->nullable();
+            $table->foreignId('store_id') // UNSIGNED BIG INT
+                    ->constrained()
+                    ->nullable();
             $table->timestamps();
         });
     }
