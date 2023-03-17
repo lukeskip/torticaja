@@ -3,10 +3,8 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Models\Product;
-use App\Models\Income;
 
-class ProductSeeder extends Seeder
+class ExtractSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -14,8 +12,7 @@ class ProductSeeder extends Seeder
      * @return void
      */
     public function run()
-    {     
-        Product::factory()->count(200)->create();        
+    {
+        //
     }
 }
-
