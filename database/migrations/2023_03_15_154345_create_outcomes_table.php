@@ -18,6 +18,8 @@ class CreateOutcomesTable extends Migration
             $table->string('label');
             $table->string('slug');
             $table->decimal('amount',9,2);
+            $table->unsignedBigInteger('branch_id')->nullable();
+            $table->unsignedBigInteger('store_id');
             $table->string('category')->default('inhouse');
             $table->timestamps();
         });

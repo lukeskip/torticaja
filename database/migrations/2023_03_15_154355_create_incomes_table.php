@@ -17,6 +17,8 @@ class CreateIncomesTable extends Migration
             $table->id();
             $table->decimal('amount',9,2);
             $table->string('type');
+            $table->unsignedBigInteger('branch_id')->nullable();
+            $table->unsignedBigInteger('store_id');
             $table->timestamps();
         });
     }
