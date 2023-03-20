@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use App\Models\Store;
 
 class BranchFactory extends Factory
 {
@@ -14,7 +15,10 @@ class BranchFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'name'=>$this->faker->sentence(2),
+            'address'=>$this->faker->sentence(5),
+            'phone'=>$this->faker->phoneNumber,
+            'store_id'=>Store::inRandomOrder()->first()->id,
         ];
     }
 }

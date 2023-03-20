@@ -3,7 +3,7 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use App\Models\Store;
+use App\Models\Store; 
 
 class ProductFactory extends Factory
 {
@@ -14,13 +14,13 @@ class ProductFactory extends Factory
      */
     public function definition()
     {
-        $store = Store::all()->random();
+        $store = Store::inRandomOrder()->first();
         return [
             'label' => $this->faker->sentence(2),
-            'price' => $this->faker->unique()->safeEmail(),
+            'price' => $this->faker->randomFloat(2,10,50),
             'unit' => now(),
-            'branch_id'=>$store->branches()->random(),
-            'store_id'=>$store,
+            'branch_id'=>$store->branches()->inRandomOrder()->first()->id,
+            'store_id'=>$store->id,
         ];
 
     }

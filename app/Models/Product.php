@@ -4,10 +4,18 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Category;
+use App\Models\Order;
+use App\Models\Branch;
 
 class Product extends Model
 {
     use HasFactory;
+
+    public function branches()
+    {
+        return $this->belongsTo(Branch::class,'branch_id');
+    }
 
     public function categories()
     {

@@ -18,6 +18,7 @@ class CreateBranchesTable extends Migration
             $table->string('name');
             $table->string('address')->nullable();
             $table->string('phone')->nullable();
+            $table->unsignedBigInteger('store_id');
             $table->timestamps();
         });
     }

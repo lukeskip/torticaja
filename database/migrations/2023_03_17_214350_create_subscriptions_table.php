@@ -19,10 +19,8 @@ class CreateSubscriptionsTable extends Migration
             $table->dateTime('starts');
             $table->dateTime('ends');
             $table->string('status');
-            $table->int('branches');
-            $table->foreignId('store') // UNSIGNED BIG INT
-                    ->constrained()
-                    ->nullable();
+            $table->integer('branches');
+            $table->unsignedBigInteger('store_id');
             $table->timestamps();
         });
     }

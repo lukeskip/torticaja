@@ -16,17 +16,14 @@ class CreateProductsTable extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->id();
             $table->string('label');
-            $table->decimal('unit_price',9,2);
+            $table->decimal('price',9,2);
             $table->string('unit');
             $table->string('image')->nullable();
-            $table->foreignId('branch_id') // UNSIGNED BIG INT
-                    ->constrained()
-                    ->nullable();
-            $table->foreignId('store_id') // UNSIGNED BIG INT
-                    ->constrained()
-                    ->nullable();
+            $table->unsignedBigInteger('branch_id');
+            $table->unsignedBigInteger('store_id');
             $table->timestamps();
         });
+
     }
 
     /**
