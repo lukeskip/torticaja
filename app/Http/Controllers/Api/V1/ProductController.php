@@ -3,11 +3,12 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
+use App\Models\Product;
 use Illuminate\Http\Request;
-use App\Models\Store;
-use App\Http\Resources\V1\StoreResource;
 
-class StoreController extends Controller
+use App\Http\Resources\V1\ProductResource;
+
+class ProductController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,8 +17,8 @@ class StoreController extends Controller
      */
     public function index()
     {
-        $stores = Store::paginate();
-        return StoreResource::collection($stores);
+        $products = Product::paginate();
+        return ProductResource::collection($products);
     }
 
     /**
@@ -34,10 +35,10 @@ class StoreController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Product $product)
     {
         //
     }
@@ -46,10 +47,10 @@ class StoreController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Product $product)
     {
         //
     }
@@ -57,10 +58,10 @@ class StoreController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Product $product)
     {
         //
     }
