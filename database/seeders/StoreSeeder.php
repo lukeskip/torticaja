@@ -3,8 +3,10 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+
 use App\Models;
 use App\Models\Store;
+use App\Models\User;
 
 class StoreSeeder extends Seeder
 {
@@ -15,6 +17,9 @@ class StoreSeeder extends Seeder
      */
     public function run()
     {
-        Store::factory()->count(3)->create();  
+        $users = User::where('role','admin')->get();
+        foreach($users as $user){
+            Store::factory()->create(['user_id'=>$user->id]); 
+        }
     }
 }

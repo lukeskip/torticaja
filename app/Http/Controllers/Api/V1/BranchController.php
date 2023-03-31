@@ -4,9 +4,15 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
 use App\Models\Branch;
+use App\Models\Income;
+use App\Models\Outcome;
+use App\Http\Resources\V1\IncomeResource;
+use App\Http\Resources\V1\OutcomeResource;
+use App\Http\Resources\V1\BranchResource;
 use Illuminate\Http\Request;
 
-use App\Http\Resources\V1\BranchResource;
+
+
 
 class BranchController extends Controller
 {
@@ -17,7 +23,7 @@ class BranchController extends Controller
      */
     public function index()
     {
-        $branches = Branch::paginate();
+        $branches = Branch::paginate(5);
         return BranchResource::collection($branches);
     }
 
@@ -39,8 +45,25 @@ class BranchController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show(Branch $branch)
-    {
-        //
+    {   
+
+        $outcomes   = $branch->stores->outcomes;
+        $outcomes   = OutcomeResource::collection($outcomes);
+
+        $incomes   = $branch->stores->incomes;
+        $incomes   = OutcomeResource::collection($incomes);
+        
+        $branch = new BranchResource($branch);
+    
+        $data = [
+            'data'=>[
+                'incomes'=>$incomes,
+                'outcomes'=>$outcomes,
+                'branch'  => $branch,
+                'status'    =>true
+        ]];
+        
+        return $data;
     }
 
     /**

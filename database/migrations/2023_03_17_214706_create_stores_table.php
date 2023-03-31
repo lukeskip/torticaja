@@ -18,6 +18,7 @@ class CreateStoresTable extends Migration
             $table->string('name');
             $table->string('address');
             $table->string('phone');
+            $table->unsignedBigInteger('user_id')->unique();
             $table->timestamps();
         });
     }

@@ -4,7 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use App\Models\Product;
-use App\Models\Income;
+use App\Models\Branch;
 
 class ProductSeeder extends Seeder
 {
@@ -14,8 +14,11 @@ class ProductSeeder extends Seeder
      * @return void
      */
     public function run()
-    {     
-        Product::factory()->count(200)->create();        
+    {   
+        $branches = Branch::all();
+        foreach ($branches as $branch) {
+            Product::factory()->count(200)->create(['store_id'=>$branch->stores->id,'branch_id'=>$branch->id]);        
+        }
     }
 }
 

@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use App\Models\Branch;
+use App\Models\Store;
 
 class BranchSeeder extends Seeder
 {
@@ -14,6 +15,9 @@ class BranchSeeder extends Seeder
      */
     public function run()
     {
-        Branch::factory()->count(20)->create();  
+        $stores = Store::all();
+        foreach($stores as $store){
+            Branch::factory()->count(3)->create(['store_id'=>$store->id]);  
+        }
     }
 }

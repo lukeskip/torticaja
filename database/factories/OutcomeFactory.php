@@ -18,14 +18,19 @@ class OutcomeFactory extends Factory
         if($store->branches){
             $branch = $store->branches->first();
         }else{
-            $branch = null;
+            $branch = 1;
         }
 
+        $name = $this->faker->name;
+        $categories = ['inhouse','outhouse'];
+
         return [
-            'label'     => $this->faker->name,
+            'label'     => $name,
             'amount'    => $this->faker->randomDigit,
             'store_id'  => $store->id,
-            'branch_id'  => $branch,
+            'branch_id' => $branch,
+            'category'  => $categories[array_rand($categories)],
+            'slug'      => make_slug($name),
 
         ];
     }

@@ -20,7 +20,7 @@ class CreateOutcomesTable extends Migration
             $table->decimal('amount',9,2);
             $table->unsignedBigInteger('branch_id')->nullable();
             $table->unsignedBigInteger('store_id');
-            $table->string('category')->default('inhouse');
+            $table->string('category')->nullable();
             $table->timestamps();
         });
     }

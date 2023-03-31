@@ -18,7 +18,6 @@ class BranchFactory extends Factory
             'name'=>$this->faker->sentence(2),
             'address'=>$this->faker->sentence(5),
             'phone'=>$this->faker->phoneNumber,
-            'store_id'=>Store::inRandomOrder()->first()->id,
         ];
     }
 }
