@@ -17,7 +17,7 @@ class ProductSeeder extends Seeder
     {   
         $branches = Branch::all();
         foreach ($branches as $branch) {
-            Product::factory()->count(200)->create(['store_id'=>$branch->stores->id,'branch_id'=>$branch->id]);        
+            Product::factory()->count(30)->create(['store_id'=>$branch->stores->id,'branch_id'=>$branch->id]);        
         }
     }
 }

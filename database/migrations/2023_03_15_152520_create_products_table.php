@@ -19,6 +19,7 @@ class CreateProductsTable extends Migration
             $table->decimal('price',9,2);
             $table->string('unit');
             $table->string('image')->nullable();
+            $table->string('code')->nullable();
             $table->unsignedBigInteger('branch_id')->nullable();
             $table->unsignedBigInteger('store_id');
             $table->timestamps();

@@ -32,9 +32,7 @@ class LoginController extends Controller
             ]);
         }
 
-        return response()->json([
-            'message'=> 'Unauthorized'
-        ]);
+        return response('Unauthenticated.', 401);
     }
 
     public function validateLogin(Request $request){

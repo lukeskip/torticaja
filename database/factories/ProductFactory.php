@@ -14,11 +14,12 @@ class ProductFactory extends Factory
      */
     public function definition()
     {
-
+        $units = ['piece','kg'];
         return [
             'label' => $this->faker->sentence(2),
             'price' => $this->faker->randomFloat(2,10,50),
-            'unit' => now(),
+            // 'unit' => $units[array_rand($units)],
+            'unit' => 'piece',
             
         ];
 
