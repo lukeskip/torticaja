@@ -11,6 +11,8 @@ use App\Http\Resources\V1\OutcomeResource;
 use App\Http\Resources\V1\BranchResource;
 use Illuminate\Http\Request;
 
+use Carbon\Carbon;
+
 
 
 
@@ -46,11 +48,12 @@ class BranchController extends Controller
      */
     public function show(Branch $branch)
     {   
-
-        $outcomes   = $branch->stores->outcomes;
+        
+       
+        $outcomes   = $branch->stores->outcomes->where('created_at',Carbon::today());
         $outcomes   = OutcomeResource::collection($outcomes);
 
-        $incomes   = $branch->stores->incomes;
+        $incomes   = $branch->stores->incomes->where('created_at',Carbon::today());
         $incomes   = OutcomeResource::collection($incomes);
         
         $branch = new BranchResource($branch);

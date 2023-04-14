@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\CashClosing;
 
 class CashClosingController extends Controller
 {
@@ -25,7 +26,19 @@ class CashClosingController extends Controller
      */
     public function store(Request $request)
     {
-        return $request;
+
+        $request->validate([
+            'dough'             => 'required',
+            'dough_cold'        => 'required',
+            'dough_leftover'    => 'required',
+            'flour'             => 'required',
+            'tortilla_leftover' => 'required',
+            'cash'              => 'required',
+            'gas'               => 'required'
+        ]);
+        return $cashClosing = CashClosing::create($request->all());
+
+        
     }
 
     /**

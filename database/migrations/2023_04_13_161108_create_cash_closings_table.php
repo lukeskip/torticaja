@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateExtractsTable extends Migration
+class CreateCashClosingsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,15 @@ class CreateExtractsTable extends Migration
      */
     public function up()
     {
-        Schema::create('extracts', function (Blueprint $table) {
+        Schema::create('cash_closings', function (Blueprint $table) {
             $table->id();
             $table->decimal('dough',9,2);
             $table->decimal('dough_cold',9,2);
             $table->decimal('dough_leftover',9,2);
             $table->decimal('flour',9,2);
-            $table->decimal('flour_kg',9,2);
             $table->decimal('tortilla_leftover',9,2);
-            $table->date('date');
+            $table->decimal('gas', 10, 2)->default(0);
+            $table->decimal('cash', 10, 2)->default(0);
             $table->timestamps();
         });
     }
@@ -33,6 +33,6 @@ class CreateExtractsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('extracts');
+        Schema::dropIfExists('cash_closings');
     }
 }

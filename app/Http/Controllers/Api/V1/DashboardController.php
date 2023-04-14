@@ -8,6 +8,7 @@ use App\Http\Resources\V1\DashboardResource;
 use App\Http\Resources\V1\IncomeResource;
 use App\Http\Resources\V1\OutcomeResource;
 use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
 
 use App\Models\Store;
 use App\Models\Branch;
@@ -25,14 +26,15 @@ class DashboardController extends Controller
     public function index()
     {
         $user       = Auth::user();
+  
         if($user->has('stores')){
 
-            $store      = Store::where('user_id',$user->id)->first();
-            $branch     = Branch::where('store_id',$store->id)->first();
-            $incomes    = Income::where('branch_id',$branch->id)->limit(20)->get();
+            // $store      = Store::where('user_id',$user->id)->first();
+
+            $incomes    = Income::where('branch_id',$user->branch_id)->get();
+            $outcomes   = Outcome::where('branch_id',$user->branch_id)->get();
+
             $incomes    = IncomeResource::collection($incomes);
-    
-            $outcomes   = Outcome::where('store_id',$store->id)->orWhere('branch_id',$branch->id)->limit(20)->get();
             $outcomes   = OutcomeResource::collection($outcomes);
     
             $dashboardData = [
