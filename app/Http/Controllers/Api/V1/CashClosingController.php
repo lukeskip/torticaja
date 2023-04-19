@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\V1;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\CashClosing;
+use Carbon\Carbon;
 
 class CashClosingController extends Controller
 {
@@ -26,7 +27,7 @@ class CashClosingController extends Controller
      */
     public function store(Request $request)
     {
-
+        $today      = Carbon::today();
         $request->validate([
             'dough'             => 'required',
             'dough_cold'        => 'required',
@@ -36,7 +37,60 @@ class CashClosingController extends Controller
             'cash'              => 'required',
             'gas'               => 'required'
         ]);
-        return $cashClosing = CashClosing::create($request->all());
+
+        $cashClosing = CashClosing::create($request->all());
+
+        $tortilla = Product::where('label','Tortilla KG')->first();
+
+        if($tortilla){
+
+            $incomes = Income::whereDate('created_at',$today)->where('product_id','!=',$tortilla->is_double)->whereHas('orders',function($q){
+                $q->where('method','cash');
+            })->get();
+            
+            $outcomes   = Outcome::whereDate('created_at',$today)->where('category','inhouse')->get();
+           
+            $cash           = $extract->cash;
+    
+            $incomesTotal   = $incomes->sum('amount');
+            $outcomesTotal  = $outcomes->sum('amount');
+    
+            ///// STARTS: Calculates tortilla sale
+    
+            $income = Income::where('product_id',$tortilla->id)->wheredate('created_at',$today)->first();
+            
+            if(!$income){
+                $income             = new Income;
+    
+                $order              = new Order;
+                $order->code        = get_code(5);
+                $order->address     = 'counter';
+                $order->status      = 'delivered'; 
+                $order->method      = 'efectivo';
+                $order->save();
+    
+                $income->order_id   = $order->id;
+            }
+
+            $amount = ($cash - $incomesTotal) + ($outcomesTotal);
+  
+            $quantity   = round($amount / $tortilla->price , 1);
+       
+            $income->amount             = round($amount,2);
+            $income->product_id         = $tortilla->id;
+            $income->product_quantity   = $quantity;
+            
+            $income->save();
+            $income->categories()->sync($category);
+        }
+
+        return response()->json([
+            'message' => 'Corte de caja registrado correctamente',
+            'cashClosing' => $cashClosing,
+            status=>200
+        ],200);
+
+        
 
         
     }

@@ -18,4 +18,9 @@ class Branch extends Model
     {
         return $this->belongsTo(Store::class,'store_id');
     }
+
+    public function orders()
+    {
+        return $this->hasMany(Order::class,'branch_id');
+    }
 }

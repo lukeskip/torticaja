@@ -16,10 +16,13 @@ class CreateIncomesTable extends Migration
         Schema::create('incomes', function (Blueprint $table) {
             $table->id();
             $table->decimal('amount',9,2);
+            $table->decimal('product_quantity',9,2);
+            $table->unsignedBigInteger('product_id');
+            $table->unsignedBigInteger('order_id');
             $table->unsignedBigInteger('branch_id')->nullable();
             $table->unsignedBigInteger('category_id')->nullable();
-            $table->unsignedBigInteger('store_id');
-            $table->timestamps();
+            $table->unsignedBigInteger('store_id')->nullable();
+            $table->timestamps();   
         });
     }
 

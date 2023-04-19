@@ -6,10 +6,15 @@ use App\Http\Controllers\Controller;
 use App\Models\Branch;
 use App\Models\Income;
 use App\Models\Outcome;
+use App\Models\Order;
 use App\Http\Resources\V1\IncomeResource;
 use App\Http\Resources\V1\OutcomeResource;
 use App\Http\Resources\V1\BranchResource;
+use App\Http\Resources\V1\OrderResource;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+
+use App\Http\Resources\V1\ProductResource;
 
 use Carbon\Carbon;
 
@@ -50,23 +55,29 @@ class BranchController extends Controller
     {   
         
        
-        $outcomes   = $branch->stores->outcomes->where('created_at',Carbon::today());
+        $outcomes   = Outcome::where('branch_id',$branch->id)->whereDate('created_at',Carbon::today())->orderBy('created_at','desc')->get();
         $outcomes   = OutcomeResource::collection($outcomes);
 
-        $incomes   = $branch->stores->incomes->where('created_at',Carbon::today());
-        $incomes   = OutcomeResource::collection($incomes);
         
+        
+        $incomes = Income::where('incomes.branch_id',$branch->id)->whereDate('incomes.created_at',Carbon::today())
+        ->join("products","products.id", "=", "incomes.product_id")
+        ->select("products.id","products.label", \DB::raw('count(*) as items'),\DB::raw('sum(incomes.amount) as amount'))->groupBy('label')->orderBy('amount','DESC')
+        ->get();
+        
+        $incomes = IncomeResource::collection($incomes);
         $branch = new BranchResource($branch);
     
+      
         $data = [
-            'data'=>[
-                'incomes'=>$incomes,
-                'outcomes'=>$outcomes,
-                'branch'  => $branch,
-                'status'    =>true
-        ]];
+            'incomes'    =>$incomes,
+            'outcomes'  =>$outcomes,
+            'branch'    => $branch,
+            'status'    =>200
+        ];
+       
         
-        return $data;
+       return response()->json($data,200);
     }
 
     /**

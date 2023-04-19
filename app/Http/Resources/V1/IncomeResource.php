@@ -16,9 +16,11 @@ class IncomeResource extends JsonResource
     {
         return[
             'id'=>$this->id,
+            'label'=> $this->label,
             'amount'=> $this->amount,
             'type'=> $this->type,
             'date'=> $this->date,
+            'time'=> $this->time,
         ];
     }
 }

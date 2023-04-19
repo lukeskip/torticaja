@@ -12,22 +12,12 @@ class Order extends Model
     public function incomes()
     {
         return $this->hasMany(Income::class,'order_id')->join("products","products.id", "=", "incomes.product_id")
-        ->select("incomes.id","incomes.product_id","incomes.amount as amount","incomes.product_quantity as quantity","products.label as label",'products.unit_price as price','products.unit as unit');
+        ->select("incomes.id","incomes.product_id","incomes.amount as amount","incomes.product_quantity as quantity","products.label as label",'products.price as price','products.unit as unit');
     }
 
-    public function incomesUpdate()
-    {
-        return $this->hasMany(Income::class,'order_id')->join("products","products.id", "=", "incomes.product_id")
-        ->join("product_category","product_category.product_id", "=", "products.id")
-        ->join("categories","product_category.category_id", "=", "categories.id")
-        ->select("incomes.id as income_id","incomes.product_id as id","incomes.amount as amount","incomes.product_quantity as quantity","products.label as label",'products.unit_price as price','products.unit as unit','categories.id as categories');
+    public function branches(){
+        return $this->belongsTo(Branch::class,'branch_id');
     }
-
-    public function products()
-    {
-        return $this->belongsToMany(Product::class,'order_product')->withPivot('quantity','amount');
-    }
-
 
     public function getTotalAttribute(){   
         $total_price = 0;
@@ -35,7 +25,7 @@ class Order extends Model
             $total_price += $income->amount;
         }
 
-        return $this->attributes['total'] = $total_price;
+        return $this->attributes['total'] = round($total_price,2);
     }
 
     public function getStatusLabelAttribute(){
