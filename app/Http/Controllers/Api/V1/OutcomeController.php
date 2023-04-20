@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Models\Outcome;
 use App\Models\Branch;
 use App\Http\Resources\V1\OutcomeResource;
+use Intervention\Image\Facades\Image;
+use Illuminate\Support\Facades\Storage;
 
 class OutcomeController extends Controller
 {
@@ -38,14 +40,15 @@ class OutcomeController extends Controller
      */
     public function store(Request $request)
     {
+      
         $branch_id =  auth('sanctum')->user()->branch_id;
         $branch = Branch::find($branch_id);
         $store = $branch->store_id;
         
-        $request->validate([
-            'label' => 'required',
-            'amount' => 'required',
-        ]);
+        // $request->validate([
+        //     'label' => 'required',
+        //     'amount' => 'required',
+        // ]);
 
 
         $outcome = new Outcome;
@@ -54,6 +57,24 @@ class OutcomeController extends Controller
         $outcome->category = $request->category;
         $outcome->branch_id = $branch_id;
         $outcome->store_id = $store;
+        
+
+        if(!empty($request->file('photo'))){
+
+            // SAVING IMAGE FILE
+            $photo = Image::make($request->file('photo'))
+            ->resize(800, null, function ($constraint) {
+                $constraint->aspectRatio();
+            })
+            ->encode('jpg',80);
+    
+            $code = substr(str_shuffle("0123456789ABCDEFGHIJKLMNOPQRSTVWXYZ"), 0, 4);
+            $file_name = 'outcome_'.$code.".jpg";
+    
+            Storage::disk('local')->put( '/img/outcomes/'.$file_name, $photo);
+            $outcome->photo = $file_name;
+        }
+      
         $outcome->save();
 
         return response()->json([

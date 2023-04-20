@@ -21,6 +21,7 @@ class CreateOutcomesTable extends Migration
             $table->unsignedBigInteger('branch_id')->nullable();
             $table->unsignedBigInteger('store_id');
             $table->string('category')->nullable();
+            $table->string('photo')->nullable();
             $table->timestamps();
         });
     }
