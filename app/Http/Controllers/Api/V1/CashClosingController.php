@@ -27,7 +27,15 @@ class CashClosingController extends Controller
      */
     public function store(Request $request)
     {
-        $today      = Carbon::today();
+        // if date is not set we use today's date
+        if(!$request->date){
+            $date  = Carbon::today();
+        }else{
+            $date  = Carbon::parse($request->date);
+        }
+
+        
+
         $request->validate([
             'dough'             => 'required',
             'dough_cold'        => 'required',
@@ -35,20 +43,24 @@ class CashClosingController extends Controller
             'flour'             => 'required',
             'tortilla_leftover' => 'required',
             'cash'              => 'required',
-            'gas'               => 'required'
+            'gas'               => 'required',
+            'branch'            => 'required',
         ]);
 
         $cashClosing = CashClosing::create($request->all());
 
-        $tortilla = Product::where('label','Tortilla KG')->first();
+        // we get tortilla product by slug
+        $tortilla = Product::where('slug','tortilla-kg')->first();
 
+        // if tortilla product exists we calculate the incomes coming from tortilla sales
         if($tortilla){
 
-            $incomes = Income::whereDate('created_at',$today)->where('product_id','!=',$tortilla->is_double)->whereHas('orders',function($q){
+            // we get all incomes but the ones related to tortilla
+            $incomes = Income::where('branch_id',$request->branch)->whereDate('created_at',$date)->where('product_id','!=',$tortilla->is_double)->whereHas('orders',function($q){
                 $q->where('method','cash');
             })->get();
             
-            $outcomes   = Outcome::whereDate('created_at',$today)->where('category','inhouse')->get();
+            $outcomes   = Outcome::where('branch_id',$request->branch)->whereDate('created_at',$date)->where('category','inhouse')->get();
            
             $cash           = $extract->cash;
     
@@ -56,38 +68,38 @@ class CashClosingController extends Controller
             $outcomesTotal  = $outcomes->sum('amount');
     
             ///// STARTS: Calculates tortilla sale
-    
-            $income = Income::where('product_id',$tortilla->id)->wheredate('created_at',$today)->first();
+
+            // We estimate the amount of tortilla sold by substrating the total incomes (without tortilla) from the total cash an then we add the total outcomes
+            $amount = ($cash - $incomesTotal) + ($outcomesTotal);
+            $quantity   = round($amount / $tortilla->price , 1);
+
+            // we get the tortilla income
+            $income = Income::where('branch_id',$request->branch)->where('product_id',$tortilla->id)->wheredate('created_at',$date)->first();
             
+            // if an income related to tortilla  does not exist we create it along with its order, if does exist we update it
             if(!$income){
                 $income             = new Income;
-    
                 $order              = new Order;
-                $order->code        = get_code(5);
                 $order->address     = 'counter';
                 $order->status      = 'delivered'; 
                 $order->method      = 'efectivo';
                 $order->save();
-    
                 $income->order_id   = $order->id;
-            }
+            }else{
 
-            $amount = ($cash - $incomesTotal) + ($outcomesTotal);
-  
-            $quantity   = round($amount / $tortilla->price , 1);
+                $income->amount             = round($amount,2);
+                $income->product_id         = $tortilla->id;
+                $income->product_quantity   = $quantity;
+                $income->save();
+                $income->categories()->sync($category);
+            }
        
-            $income->amount             = round($amount,2);
-            $income->product_id         = $tortilla->id;
-            $income->product_quantity   = $quantity;
-            
-            $income->save();
-            $income->categories()->sync($category);
         }
 
         return response()->json([
+            'status' => true,
             'message' => 'Corte de caja registrado correctamente',
             'cashClosing' => $cashClosing,
-            status=>200
         ],200);
 
         
