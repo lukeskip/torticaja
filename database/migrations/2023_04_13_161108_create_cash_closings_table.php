@@ -22,6 +22,7 @@ class CreateCashClosingsTable extends Migration
             $table->decimal('tortilla_leftover',9,2);
             $table->decimal('gas', 10, 2)->default(0);
             $table->decimal('cash', 10, 2)->default(0);
+            $table->unsignedBigInteger('branch_id');
             $table->timestamps();
         });
     }

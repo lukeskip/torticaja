@@ -5,8 +5,7 @@ namespace App\Http\Controllers\Api\V1;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Resources\V1\DashboardResource;
-use App\Http\Resources\V1\IncomeResource;
-use App\Http\Resources\V1\OutcomeResource;
+use App\Http\Resources\V1\BranchResource;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 
@@ -25,29 +24,27 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        $user       = Auth::user();
-  
+        $user       = auth('sanctum')->user();
+
         if($user->has('stores')){
 
-            // $store      = Store::where('user_id',$user->id)->first();
+            $store      = Store::where('user_id',$user->id)->first();
+            $branches   = Branch::where('store_id',$store->id)->get();
 
-            $incomes    = Income::where('branch_id',$user->branch_id)->get();
-            $outcomes   = Outcome::where('branch_id',$user->branch_id)->get();
-
-            $incomes    = IncomeResource::collection($incomes);
-            $outcomes   = OutcomeResource::collection($outcomes);
-    
-            $dashboardData = [
+            return response()->json([
+                'message'=>'Información obtenida correctamente',
+                'status'=>201,
+                'success'=>true,
                 'data'=>[
-                    'incomes'=>$incomes,
-                    'outcomes'=>$outcomes,
-                    'status'=>true
-            ]];
-            return $dashboardData;
+                    'branches'=>BranchResource::collection($branches),
+                    'store'=>new BranchResource($store)
+                ]
+            ],200);
         }else{
             return response()->json([
                 'message'=>'No hay información que mostrar',
-                'status'=>false
+                'success'=>false,
+                'status'=>200,
             ],200);
         }
 

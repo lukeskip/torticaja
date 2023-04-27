@@ -6,6 +6,10 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\CashClosing;
 use Carbon\Carbon;
+use App\Models\Product;
+use App\Models\Outcome;
+use App\Models\Income;
+use App\Models\Order;
 
 class CashClosingController extends Controller
 {
@@ -47,7 +51,13 @@ class CashClosingController extends Controller
             'branch'            => 'required',
         ]);
 
-        $cashClosing = CashClosing::create($request->all());
+        $cashClosing    = Extract::where('branch_id',$request->branch)->whereDate('created_at',$date)->first();
+        
+        if(!$cashClosing){
+            $cashClosing = CashClosing::create($request->all());
+        }else{
+            $cashClosing->update($request->all());
+        }
 
         // we get tortilla product by slug
         $tortilla = Product::where('slug','tortilla-kg')->first();
@@ -62,7 +72,7 @@ class CashClosingController extends Controller
             
             $outcomes   = Outcome::where('branch_id',$request->branch)->whereDate('created_at',$date)->where('category','inhouse')->get();
            
-            $cash           = $extract->cash;
+            $cash           = $request->cash;
     
             $incomesTotal   = $incomes->sum('amount');
             $outcomesTotal  = $outcomes->sum('amount');
@@ -80,19 +90,19 @@ class CashClosingController extends Controller
             if(!$income){
                 $income             = new Income;
                 $order              = new Order;
-                $order->address     = 'counter';
                 $order->status      = 'delivered'; 
                 $order->method      = 'efectivo';
+                $order->branch_id   = $request->branch;
                 $order->save();
                 $income->order_id   = $order->id;
-            }else{
-
-                $income->amount             = round($amount,2);
-                $income->product_id         = $tortilla->id;
-                $income->product_quantity   = $quantity;
-                $income->save();
-                $income->categories()->sync($category);
             }
+
+            $income->amount             = round($amount,2);
+            $income->product_id         = $tortilla->id;
+            $income->product_quantity   = $quantity;
+            $income->save();
+            $income->categories()->sync($category);
+            
        
         }
 
