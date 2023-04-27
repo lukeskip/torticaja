@@ -13,13 +13,15 @@ class OutcomeResource extends JsonResource
      * @return array|\Illuminate\Contracts\Support\Arrayable|\JsonSerializable
      */
     public function toArray($request)
-    {
+    {   
+        $path_photo = 'storage/img/outcomes/'.$this->photo;
         return[
             'id'=>$this->id,
             'label'=>$this->label,
             'slug'=>$this->slug,
             'amount'=>$this->amount,
             'category'=>$this->category,
+            'photo'=> $path_photo,
             'date'=> $this->date,
         ];
 

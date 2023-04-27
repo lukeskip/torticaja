@@ -28,3 +28,5 @@ Route::get('/config', function () {
 Route::post('/test-connection', function () {
     return response()->json(['success' => true ]);
 });
+
+Route::get('/outcomes-photos/{filename}', [App\Http\Controllers\FileController::class, 'serve_file'])->name("outcomes_file");

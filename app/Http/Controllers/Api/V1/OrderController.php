@@ -92,6 +92,7 @@ class OrderController extends Controller
         }
 
         return response()->json([
+            'success' => true,
             'message' => 'Orden creada con exito',
             'order'   => $order,
             'status'  =>201

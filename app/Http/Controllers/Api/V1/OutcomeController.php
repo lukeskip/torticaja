@@ -71,7 +71,7 @@ class OutcomeController extends Controller
             $code = substr(str_shuffle("0123456789ABCDEFGHIJKLMNOPQRSTVWXYZ"), 0, 4);
             $file_name = 'outcome_'.$code.".jpg";
     
-            Storage::disk('local')->put( '/img/outcomes/'.$file_name, $photo);
+            Storage::disk('local')->put( 'public/img/outcomes/'.$file_name, $photo);
             $outcome->photo = $file_name;
         }
       
