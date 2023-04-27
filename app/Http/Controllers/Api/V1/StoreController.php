@@ -55,7 +55,8 @@ class StoreController extends Controller
 
             // we create a the main product tortillas for each branch
             $product = new Product();
-            $product->name = 'Tortillas KG';
+            $product->label = 'Tortillas KG';
+            $product->slug = 'tortilla-kg';
             $product->price = 21.00;
             $product->branch_id = $branch->id;
             $product->save();

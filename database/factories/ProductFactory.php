@@ -15,8 +15,10 @@ class ProductFactory extends Factory
     public function definition()
     {
         $units = ['piece','kg'];
+        $label = $this->faker->sentence(2);
         return [
-            'label' => $this->faker->sentence(2),
+            'label' => $label,
+            'slug' => \Str::slug($label),
             'price' => $this->faker->randomFloat(2,10,50),
             // 'unit' => $units[array_rand($units)],
             'unit' => 'piece',
