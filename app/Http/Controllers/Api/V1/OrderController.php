@@ -8,6 +8,7 @@ use App\Models\Product;
 use App\Models\Income;
 use App\Models\Order;
 use App\Http\Resources\V1\ProductResource;
+use App\Http\Resources\V1\OrderResource;
 use Carbon\Carbon;
 
 
@@ -20,7 +21,18 @@ class OrderController extends Controller
      */
     public function index()
     {
-        //
+        $user = auth('sanctum')->user();
+        $orders = Order::where('branch_id',$user->branch_id)->get();
+        
+        $data = [
+            'success'   => true,
+            'message'   => 'Ordenes encontradas',
+            'orders'    => OrderResource::collection($orders),
+            'status'    =>200
+        ];
+       
+        
+       return response()->json($data,200);
     }
 
     public function create(Request $request)

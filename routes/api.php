@@ -39,7 +39,7 @@ Route::middleware(['auth:sanctum','employee'])->group(function() {
     Route::middleware('auth:sanctum')->apiResource('/v1/cash-closings',App\Http\Controllers\Api\V1\CashClosingController::class);
 
     Route::middleware('auth:sanctum')
-        ->get('/v1/orders',[App\Http\Controllers\Api\V1\OrderController::class, 'create'])
+        ->get('/v1/orders/create',[App\Http\Controllers\Api\V1\OrderController::class, 'create'])
         ->name('order-create'); 
 
     Route::middleware('auth:sanctum')->get('v1/product-search/{branch}/{code}','App\Http\Controllers\Api\V1\ProductController@search')->name('search-product');

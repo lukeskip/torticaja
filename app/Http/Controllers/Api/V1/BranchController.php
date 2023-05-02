@@ -54,8 +54,10 @@ class BranchController extends Controller
     public function show(Branch $branch)
     {   
         
-       
-        $outcomes   = Outcome::where('branch_id',$branch->id)->whereDate('created_at',Carbon::today())->orderBy('created_at','desc')->get();
+        $orders   = Order::where('branch_id',$branch->id)->whereDate('created_at',Carbon::today())->orderBy('created_at','desc')->limit(10)->get();
+        $orders   = OrderResource::collection($orders);
+
+        $outcomes   = Outcome::where('branch_id',$branch->id)->whereDate('created_at',Carbon::today())->orderBy('created_at','desc')->limit(10)->get();
         $outcomes   = OutcomeResource::collection($outcomes);
 
         
@@ -71,7 +73,8 @@ class BranchController extends Controller
       
         $data = [
             'incomes'    =>$incomes,
-            'outcomes'  =>$outcomes,
+            'outcomes'  =>  $outcomes,
+            'orders'    => $orders,
             'branch'    => $branch,
             'status'    =>200
         ];

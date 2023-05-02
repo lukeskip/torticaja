@@ -114,6 +114,13 @@ class OutcomeController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $outcome = Outcome::find($id);
+        $outcome->delete();
+
+        return response()->json([
+            'message' => 'Outcome deleted successfully',
+            'success'=> true,
+            'status' => 200
+        ], 200);
     }
 }

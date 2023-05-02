@@ -15,6 +15,7 @@ class Order extends Model
         ->select("incomes.id","incomes.product_id","incomes.amount as amount","incomes.product_quantity as quantity","products.label as label",'products.price as price','products.unit as unit');
     }
 
+
     public function branches(){
         return $this->belongsTo(Branch::class,'branch_id');
     }
