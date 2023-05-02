@@ -32,6 +32,7 @@ class LoginController extends Controller
                     $branch = $branch->id;
                     return response()->json([
                         'token'=>$request->user()->createToken('react-mobile')->plainTextToken,
+                        'name'=>$request->user()->name,
                         'role'=>$request->user()->role,
                         'branch'=>$branch,
                         'store'=>$store,
