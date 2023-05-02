@@ -19,30 +19,42 @@ class LoginController extends Controller
         if(Auth::attempt($request->only('email','password'))){
             
             if($request->user()->role == 'employee'){
-                $branch = Branch::find($request->user()->branch_id)->id;
-            }else{
-                $branch = null;
-            }
-
-            $store = Store::where('user_id',$request->user()->branch_id)->first();
-
-            if(!$store){
-                $store = -1;
-            }else{
-                $store = $store->id;
-            }
-
+                $branch = Branch::find($request->user()->branch_id);
+                $store = Store::find($branch->store_id);
+                
+                if(!$branch){
+                    return response()->json([
+                        'success'=>false,
+                        'message'=> 'El usuario no tiene una sucursal asignada',
+                        'status'=>401,
+                    ],401);
+                }else{
+                    $branch = $branch->id;
+                    return response()->json([
+                        'token'=>$request->user()->createToken('react-mobile')->plainTextToken,
+                        'role'=>$request->user()->role,
+                        'branch'=>$branch,
+                        'store'=>$store,
+                        'message'=> 'Success',
+                        'success'=>true,
+                    ]);
+                }
             
-            return response()->json([
-                'token'=>$request->user()->createToken('react-mobile')->plainTextToken,
-                'role'=>$request->user()->role,
-                'branch'=>$branch,
-                'store'=>$store,
-                'message'=> 'Success'
-            ]);
+            
+            }else{
+                return response()->json([
+                    'success'=>false,
+                    'status'=>401,
+                    'message'=> 'Unauthorized'
+                ],401);
+            }
         }
 
-        return response('Unauthenticated.', 401);
+        return response()->json([
+            'success'=>false,
+            'status'=>401,
+            'message'=> 'Unauthorized'
+        ],401);
     }
 
     public function validateLogin(Request $request){
